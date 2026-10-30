@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://d4drfauvpjwmn"]
+
+[ext_resource type="Script" uid="uid://cy662gykvejha" path="res://main.gd" id="1_5vw27"]
+[ext_resource type="Script" uid="uid://lpxn85aenlp5" path="res://world.gd" id="1_h2yge"]
+[ext_resource type="Script" uid="uid://ckr66mictg713" path="res://player.gd" id="2_1bvp3"]
+[ext_resource type="Script" uid="uid://drphol8h410pu" path="res://id_storage.gd" id="2_4c57u"]
+[ext_resource type="Texture2D" uid="uid://ow00ltppfi7l" path="res://граунд тайлы.png" id="2_272bh"]
+[ext_resource type="Texture2D" uid="uid://bm6yxjuqelcs2" path="res://Объекты тайлы.png" id="3_7mycd"]
+[ext_resource type="Script" uid="uid://cyiajb00valn4" path="res://main_menu.gd" id="4_272bh"]
+[ext_resource type="Texture2D" uid="uid://jg3uv4f7omd4" path="res://Player2.png" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://bec3kxoxhp28o" path="res://inventory.gd" id="5_lquwl"]
+[ext_resource type="Texture2D" uid="uid://cc6dni5gln66h" path="res://Инвентарь тайлы.png" id="6_efxa6"]
+[ext_resource type="Script" uid="uid://bukby0qvfwjct" path="res://world_generator.gd" id="7_dg77c"]
+[ext_resource type="Texture2D" uid="uid://0fagbtlo870g" path="res://Предметы тайлы.png" id="8_4c57u"]
+[ext_resource type="Script" uid="uid://bj3mv7ntboi0d" path="res://player_controller.gd" id="11_ycdy4"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7mycd"]
+texture = ExtResource("2_272bh")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_h2yge"]
+sources/0 = SubResource("TileSetAtlasSource_7mycd")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lquwl"]
+texture = ExtResource("3_7mycd")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_7mycd"]
+sources/0 = SubResource("TileSetAtlasSource_lquwl")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_efxa6"]
+radius = 5.0
+
+[node name="Main" type="Node2D" unique_id=1788032117]
+script = ExtResource("1_5vw27")
+
+[node name="IDStorage" type="Node2D" parent="." unique_id=948001905]
+script = ExtResource("2_4c57u")
+atlas_texture = ExtResource("2_272bh")
+objects_texture = ExtResource("3_7mycd")
+furniture_texture = ExtResource("8_4c57u")
+item_icons_texture = ExtResource("6_efxa6")
+
+[node name="Ground" type="TileMapLayer" parent="IDStorage" unique_id=832307478]
+position = Vector2(0.25, 0)
+tile_set = SubResource("TileSet_h2yge")
+
+[node name="Resources" type="TileMapLayer" parent="IDStorage" unique_id=1600127865]
+position = Vector2(0.25, 0)
+tile_set = SubResource("TileSet_7mycd")
+
+[node name="WorldGenerator" type="Node2D" parent="." unique_id=605196706]
+script = ExtResource("7_dg77c")
+
+[node name="World" type="Node2D" parent="." unique_id=1494352968]
+script = ExtResource("1_h2yge")
+
+[node name="Player" type="CharacterBody2D" parent="World" unique_id=1053572185]
+position = Vector2(0.25, 0)
+motion_mode = 1
+script = ExtResource("2_1bvp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player" unique_id=426406682]
+position = Vector2(-0.25, 0)
+shape = SubResource("CircleShape2D_efxa6")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Player" unique_id=22746904]
+position = Vector2(0, -3)
+scale = Vector2(0.62499994, 0.625)
+texture = ExtResource("5_7mycd")
+
+[node name="Camera2D" type="Camera2D" parent="World/Player" unique_id=841374969]
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
+
+[node name="PlayerController" type="Node2D" parent="World/Player" unique_id=1295858102]
+script = ExtResource("11_ycdy4")
+
+[node name="MenuLayer" type="CanvasLayer" parent="." unique_id=202578914]
+
+[node name="MainMenu" type="Control" parent="MenuLayer" unique_id=930040117]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -0.25
+offset_right = 39.75
+offset_bottom = 40.0
+script = ExtResource("4_272bh")
+
+[node name="InventoryUI" type="CanvasLayer" parent="." unique_id=532333258]
+script = ExtResource("5_lquwl")
